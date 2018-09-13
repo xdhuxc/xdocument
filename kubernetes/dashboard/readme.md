@@ -24,7 +24,8 @@ kubectl create -f kubernetes-dashboard.yaml
 这个无密码登录有个问题：打开容器组的容器面板，右上角有”运行命令”，这里是不能执行的，另外菜单的”设置”不能使用
 
 ### kubernetic 客户端方式
-1、下载安装kubernetic（）
+1、下载安装[kubernetic](http://kubernetic.com/)
+
 2、执行如下命令生成kubectl配置文件（~/.kube/config）
 ```
 # 创建cluster

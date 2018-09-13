@@ -34,6 +34,9 @@ set encoding=utf-8
 
 
 ### pycharm 快捷键
+快捷键 | 功能
+---|---
+Ctrl + X | 删除当前行
 
 
 ### word 快捷键

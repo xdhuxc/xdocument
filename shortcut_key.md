@@ -37,9 +37,16 @@ set encoding=utf-8
 快捷键 | 功能
 ---|---
 Ctrl + X | 删除当前行
+Ctrl + D | 复制当前行到下一行
 
 
 ### word 快捷键
+快捷键 | 功能
+---|---
+Ctrl + Home | 将光标移动到文档首部
+Ctrl + End | 将光标移动到文档尾部
+Alt + Enter | 单元格内换行
+Shift + PageDown | 选中光标后面的部分，可以按住 ‘Shift’ 键，然后一直按 ‘PageDown’ 键，选中内容后，按 ‘Delete’ 键删除选中内容
 
 
 ### eclipse 快捷键

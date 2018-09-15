@@ -1,10 +1,10 @@
 ### 免密方式
 
 #### 使用代理方式部署
-1、依次执行如下命令部署dashboard：
+1、依次执行如下命令部署 dashboard：
 ```
-kubectl delete -f kubernetes-dashboard.yaml 
 kubectl create -f kubernetes-dashboard.yaml 
+kubectl create -f dashboard-admin.yaml 
 nohup kubectl proxy --address='0.0.0.0' --port=8888 --accept-hosts='^*$' &
 ```
 2、访问地址：
@@ -12,11 +12,11 @@ http://k8s_master_ip:8888/ui
 
 
 #### NodePort方式部署 
-1、修改kubernetes-dashboard.yaml文件，打开type: NodePort和nodePort: 35888
-2、依次执行如下命令部署dashboard：
+1、修改 no_password/kubernetes-dashboard.yaml 文件，打开 type: NodePort 和 nodePort: 35888
+2、依次执行如下命令部署 dashboard：
 ```
-kubectl delete -f kubernetes-dashboard.yaml 
-kubectl create -f kubernetes-dashboard.yaml
+kubectl create -f kubernetes-dashboard.yaml 
+kubectl create -f dashboard-admin.yaml
 ```
 3、访问地址：http://k8s_master_ip:35888
 
@@ -46,7 +46,7 @@ kubectl config view
 ### token登录
 1、创建dashboard
 ```
-kubectl delete -f kubernetes-dashboard.yaml 
+kubectl create -f kubernetes-dashboard.yaml 
 ```
 2、获取dashboard 的token
 ```

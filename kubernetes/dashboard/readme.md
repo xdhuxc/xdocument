@@ -1,24 +1,23 @@
 ### 免密方式
+> 以下假设 kubernetes master 所在机器的IP地址为：172.20.26.150
 
 #### 使用代理方式部署
-1、依次执行如下命令部署dashboard：
+1、依次执行如下命令部署 dashboard：
 ```
-kubectl delete -f kubernetes-dashboard.yaml 
 kubectl create -f kubernetes-dashboard.yaml 
 nohup kubectl proxy --address='0.0.0.0' --port=8888 --accept-hosts='^*$' &
 ```
 2、访问地址：
-http://k8s_master_ip:8888/ui
+http://172.20.26.150:8888/ui
 
 
 #### NodePort方式部署 
-1、修改kubernetes-dashboard.yaml文件，打开type: NodePort和nodePort: 35888
-2、依次执行如下命令部署dashboard：
+1、修改 kubernetes-dashboard.yaml 文件，打开 type: NodePort和nodePort: 35588
+2、依次执行如下命令部署 dashboard：
 ```
-kubectl delete -f kubernetes-dashboard.yaml 
 kubectl create -f kubernetes-dashboard.yaml
 ```
-3、访问地址：http://k8s_master_ip:35888
+3、访问地址：http://172.20.26.150:35588
 
 #### 问题
 这个无密码登录有个问题：打开容器组的容器面板，右上角有”运行命令”，这里是不能执行的，另外菜单的”设置”不能使用

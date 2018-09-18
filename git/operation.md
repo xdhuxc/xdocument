@@ -1,6 +1,15 @@
-### githu 
+### github
 
 #### 切换分支
-1、在本地新建一个分支： git branch newBranch 
-切换到你的新分支: git checkout newBranch 
-将新分支发布在github上： git push origin newBranch 
+1、使用本地 git 命令创建新分支
+```angular2html
+git branch xdhuxc
+```
+2、切换到新分支，master 分支上的内容自动同步
+```angular2html
+git checkout xdhuxc
+```
+3、将新分支发布到 github 上
+```angular2html
+git push origin xdhuxc
+```

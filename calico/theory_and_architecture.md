@@ -3,11 +3,11 @@ Calico 是一个纯三层的数据中心网络方案，能够提供可控的虚�
 
 通过将整个互联网的可扩展网络原则压缩到数据中心级别，calico在每一个计算节点利用Linux内核实现了一个高效的vRouter来负责数据转发，而每个vRouter通过BGP协议负责把自己上运行的workload的路由信息向整个calcio网络内广播。小规模部署时各计算节点可以直接互联，大规模部署时可通过指定的BGP route reflector来完成。
 这样保证最终所有的workload之间的数据流量都是通过IP路由的方式完成互联的。
-![image](image/calico流量流程图.png)
+![image](images/calico流量流程图.png)
 calico 流量流程图
 
 calico 节点组网可以直接利用数据中心的网络结构（无论是L2或者L3），不需要额外的NAT、隧道或者overlay网络
-![image](image/calico封包图.png)
+![image](images/calico封包图.png)
 calico封包图
 
 如上图所示，这样保证这个方案的简单可控，而且没有封包解包，节约CPU计算资源的同时，提高了整个网络的性能。
@@ -16,7 +16,7 @@ calico封包图
 
 
 ### calico 架构
-![image](image/calico架构图.png)
+![image](images/calico架构图.png)
 calico架构图
 
 * Felix：是calico agent，运行在每台需要运行workload的节点上，主要负责配置路由及ACL2等信息来确保Endpoint的连通状态。
@@ -30,7 +30,7 @@ calico架构图
 
 每个主机上都部署了 calico node 作为虚拟路由器，并且可以通过 calico 将宿主机组织成任意的拓扑集群。当集群中的容器需要与外界通信时，就可以通过BGP协议将网关物理路由器加入到集群中，使外界可以直接访问容器IP，而不需要做任何NAT之类的复杂操作。
 当容器通过 calico 进行跨主机通信时，其网络通信模型如下图所示：
-![image](image/calico网络通信模型.png)
+![image](images/calico网络通信模型.png)
 
 从上图可以看出，当创建容器时，calcio 为容器生成 veth pair，一端作为容器网卡加入到容器的网络命名空间，并设置IP地址和子网掩码，一端直接暴露在宿主机上，并通过设置路由规则，将容器IP暴露到宿主机的通信路由上。与此同时，calico为每个主机分配了一段子网作为容器可分配的IP范围，这样就可以根据子网的CIDR为每个主机生成比较固定的路由规则。
 

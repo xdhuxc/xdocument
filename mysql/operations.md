@@ -1,7 +1,12 @@
 ### 赋权操作
 1、创建只读账户
 ```
-
+mysql> grant select on *.* to 'xdhuxc'@'%' identified by 'Xdhuxc163';  # 创建只读账户xdhuxc，密码为：Xdhuxc63
+mysql> flush privileges;
+```
+查看其权限
+```
+mysql> show grants for 'xdhuxc'@'%';
 ```
 
 2、授予权限

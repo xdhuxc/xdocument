@@ -1,0 +1,7 @@
+[kubernetes]
+name=Kubernetes
+baseurl=https://mirrors.aliyun.com/centos/7.4.1708/virt/x86_64/kubernetes19/
+enabled=1
+gpgcheck=0
+repo_gpgcheck=0
+gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg

@@ -120,5 +120,14 @@ skip_name_resolve=ON
 ```angular2html
 mysql> show global variables like '%log%';
 ```
+![image](images/mysql-copy-5.png)
 
+3、查看从节点 server 相关信息
+```angularjs
+mysql> show global variables like '%server%';
+```
+![image](images/mysql-copy-6.png)
 
+4、在从节点配置访问主节点的参数信息，添加主节点主机、访问主节点的用户名和密码，主节点二进制文件信息。
+
+注意：主节点的二进制文件一定要是二进制列表中的最后一个二进制文件。

@@ -246,6 +246,13 @@ myisam_max_sort_file_size = 10G
 # 如果该值大于 1，在 Repair by sorting 过程中并行创建 MyISAM 表索引（每个索引在自己的线程内）
 myisam_repair_threads = 1
 
+# sync_binlog 参数控制 mysql 的二进制日志同步到磁盘的频率，取值为：0~n
+# sync_binlog=0：当事务提交之后，MySQL不做fsync之类的磁盘同步指令刷新binlog_cache中的信息到磁盘，而让Filesystem自行决定什么时候来做同步，或者cache满了之后才同步到磁盘。这个是性能最好的。
+# sync_binlog=1：当每进行1次事务提交之后，MySQL将进行一次fsync之类的磁盘同步指令来将binlog_cache中的数据强制写入磁盘。
+# sync_binlog=n：当每进行n次事务提交之后，MySQL将进行一次fsync之类的磁盘同步指令来将binlog_cache中的数据强制写入磁盘。
+# 大多数情况下，对数据的一致性并没有很严格的要求，所以并不会把 sync_binlog 配置成 1. 为了追求高并发，提升性能，可以设置为 100 或直接用 0。
+sync_binlog=1
+
 [mysqldump]
 quick
 

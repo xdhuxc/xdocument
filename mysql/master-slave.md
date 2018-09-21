@@ -131,3 +131,75 @@ mysql> show global variables like '%server%';
 4、在从节点配置访问主节点的参数信息，添加主节点主机、访问主节点的用户名和密码，主节点二进制文件信息。
 
 注意：主节点的二进制文件一定要是二进制列表中的最后一个二进制文件。
+![image](images/mysql-master-to-slave-7.png)
+
+```
+change master to master_host='172.20.26.149', master_user='replxdhuxc', master_password='Repl@163', master_log_file='mysql-bin.000001', master_log_pos=1076;
+```
+![image](images/mysql-master-to-slave-8.png)
+
+5、查看从节点的状态信息
+```angular2html
+mysql> show slave status \G;
+```
+![image](images/mysql-master-to-slave-9.png)
+由于没有启动从节点的复制线程，I/O 线程和 SQL 线程都为：No
+
+6、启动复制线程，并再次查看从节点状态信息
+```angular2html
+mysql> start slave;
+```
+`start slave` 可以指定线程类型：IO_THREAD、SQL_THREAD，如果没有指定，则两个都启动。
+![image](images/mysql-master-to-slave-10.png)
+
+到此，mysql 主从复制配置完成。
+
+#### 测试
+1、在主节点创建数据库 xdhuxc，并查看主节点二进制日志信息
+![image](images/mysql-master-to-slave-11.png)
+
+2、在从节点查看数据库 xdhuxc，并查找二进制日志信息
+![image](images/mysql-master-to-slave-12.png)
+
+#### 主从复制架构中应该注意的问题
+从节点要设置某些限定使得它不能进行写操作，才能保证复制当中的数据一致。
+
+1、限制从服务器为只读，在从服务器上设置：
+```angular2html
+read_only=ON   # 设置从服务器为只读，但是此限制对拥有 super 权限的用户均无效。
+```
+
+限制所有用户
+```angular2html
+mysql> flush tables with read lock;
+```
+
+2、保证主从复制时的事务安全
+
+1）在主节点
+
+设置参数如下：
+```angular2html
+sync_binlog=1 # 当每进行1次事务提交之后，MySQL将进行一次fsync之类的磁盘同步指令来将binlog_cache中的数据强制写入磁盘。
+innodb_flush_logs_at_trx_commit=ON # 在事务提交时，要将内存中跟事务相关的数据立即刷新到事务日志中去。
+innodb_support_xa=ON # 分布式事务，基于它来做两段式提交功能
+sync_master_info=1 # 每次给从节点 dump 一些事件信息之后，主节点的 master.info 信息会立即同步到到磁盘上，让从服务器中的 master.info 及时更新。
+```
+
+2）在每个从节点上
+
+设置参数如下：
+```angular2html
+skip_slave_start=ON # 跳过自动启动，使用手动启动。
+sync_relay_log=1    # 每次 sync_relay_log 事件都会刷新到磁盘。 
+sync_relay_log_info=1 # 每间隔多少事务刷新 relay-log.info，如果是table（innodb）设置无效，每个事务都会更新。
+```
+
+3）其他
+在从节点上，master.info 文件中记录着主节点的信息，包括master IP地址，账户名和密码，端口，复制位置等信息
+![image](images/mysql-master-to-slave-12.png)
+
+在从节点上，relay-log.info 文件中记录着从节点将来到主节点的哪一个二进制文件中的哪一个位置复制日志，及保存到本地哪一个中继日志的哪一个位置。
+
+![image](images/mysql-master-to-slave-13.png)
+

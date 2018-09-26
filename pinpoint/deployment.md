@@ -16,6 +16,9 @@
 4、下载 tomcat
 * apache-tomcat-9.0.12.tar.gz
 
+5、机器配置：
+8C-16G-500G
+
 #### 部署
 
 ##### 部署 hbase
@@ -63,7 +66,7 @@ status 'detailed'
 hbase.client.host=localhost
 hbase.client.port=2181
 ```
-指向 zookeeper 的地址和端口。如果是本机，端口默认，则这里无需更改。
+指向 zookeeper 的地址和端口。如果是本机，localhost建议改为本地外网IP地址，端口默认，则这里无需更改。
 
 
 
@@ -75,7 +78,7 @@ hbase.client.port=2181
 hbase.client.host=localhost
 hbase.client.port=2181
 ```
-指向 zookeeper 的地址和端口。如果是本机，端口默认，则这里无需更改。
+指向 zookeeper 的地址和端口。如果是本机，localhost建议改为本机外网IP地址，端口默认，则这里无需更改。
 
 ##### 部署 Pinpoint-Agent
 
@@ -88,7 +91,7 @@ mkdir pinpoint-agent && tar -zxf pinpoint-agent-1.8.0.tar.gz -C pinpoint-agent
 ```angular2html
 profiler.collector.ip=127.0.0.1
 ```
-这是指 pinpoint-collector 的地址，如果是同一服务器，则无需修改。
+这是指 pinpoint-collector 的地址，如果是同一服务器，可保持默认，建议修改为本机外网IP地址。
 
 3）安装 pinpoint-collector 启动后，自动就开启了9994，9995，9996的端口了，这里默认即可。
 如果有端口需求，要去 pinpoint-collector 的配置文件 pinpoint-collector-1.8.0/WEB-INF/classes/pinpoint-collector.properties 中，修改这些端口。

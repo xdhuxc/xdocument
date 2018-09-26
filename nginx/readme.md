@@ -1,0 +1,1 @@
+REMOTE_ADDR  获取到的 IP 地址是 Web 服务器 TCP 连接的 IP，这个不能伪造，一般 Web 服务器也不会修改这个头。

@@ -10,7 +10,7 @@ mkdir /xdhuxc
 ```angular2html
 mkfs.ext4 /dev/vdb
 ```
-4、修改/etc/fstab，添加如下内容，将分区信息写进去。
+4、修改 /etc/fstab，添加如下内容，将分区信息写进去。
 ```angular2html
 /dev/vdb  /xdhuxc      ext4    defaults        0 0
 ```

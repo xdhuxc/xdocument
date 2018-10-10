@@ -13,3 +13,13 @@ git checkout xdhuxc
 ```angular2html
 git push origin xdhuxc
 ```
+
+#### 拉取大工程
+使用 git 拉取大工程时，报错如下：
+```
+
+```
+解决方法如下：
+```angularjs
+git clone --depth 1 git://git.savannah.gnu.org/pythonwebkit.git
+```

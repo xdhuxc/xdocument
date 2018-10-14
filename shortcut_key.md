@@ -50,3 +50,7 @@ Shift + PageDown | 选中光标后面的部分，可以按住 ‘Shift’ 键，
 
 
 ### eclipse 快捷键
+
+
+### windows 快捷键
+1、按住 Shift 键，右键鼠标，可以在当前目录下打开 PowerShell。

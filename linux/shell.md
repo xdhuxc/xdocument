@@ -8,3 +8,11 @@ kill -9 $(ps -ef | grep -v grep | grep nginx | awk '{print $2}')
 ```angular2html
 netstat -tlnup|grep 35888|awk -F ' ' '{print $7}'|cut -d / -f2
 ```
+
+3、置空文件
+```angularjs
+echo "" > abc.txt # abc.txt 文件内部会有一个空行
+或
+: > abc.txt # abc.txt 文件内部没有空行 
+```
+

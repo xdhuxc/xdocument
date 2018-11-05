@@ -5,6 +5,7 @@ Ctrl + L | 清屏，相当于 clear 命令
 Ctrl + C | 发送 SIGINT 信号给前台进程组中的所有进程，常用于终止正在运行的程序
 Ctrl + Z | 发送 SIGTSTP 信号给前台进程组中的所有进程，常用于挂起一个进程
 Ctrl + R | 搜索以前使用过的命令，搜索到后，按“Enter”键，直接执行该命令
+Ctrl + A 或 HOME | 将光标移至行首
 
 ### top 命令快捷键
 在 Linux shell 下，输入 top 命令，快捷键使用如下：

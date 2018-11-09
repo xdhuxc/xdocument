@@ -16,3 +16,8 @@ echo "" > abc.txt # abc.txt 文件内部会有一个空行
 : > abc.txt # abc.txt 文件内部没有空行 
 ```
 
+4、切换到 root 用户
+```angularjs
+sudo su - # 由普通用户无密码切换到 root 用户 
+```
+

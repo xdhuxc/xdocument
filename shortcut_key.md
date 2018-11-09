@@ -38,7 +38,9 @@ set encoding=utf-8
 快捷键 | 功能
 ---|---
 Ctrl + X | 删除当前行
-Ctrl + D | 复制当前行到下一行
+Ctrl + D | 删除当前行
+Ctrl + Alt + ↑ | 复制当前行到上一行
+Ctrl + Alt + ↓ | 复制当前行到下一行
 
 
 ### word 快捷键

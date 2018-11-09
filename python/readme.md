@@ -2,6 +2,8 @@
 
 https://www.cnblogs.com/botoo/p/8294848.html
 
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#
+
 
 ### virtualenvwrapper 
 

@@ -11,3 +11,6 @@ if hasattr(sys, "setdefaultencoding"):
     del sys.setdefaultencoding
 ```
 在sys模块加载后，setdefaultencoding方法被删除了，所以我们需要通过重新导入sys模块来设置系统编码。
+
+
+####

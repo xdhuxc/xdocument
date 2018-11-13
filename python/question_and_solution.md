@@ -13,4 +13,4 @@ if hasattr(sys, "setdefaultencoding"):
 在sys模块加载后，setdefaultencoding方法被删除了，所以我们需要通过重新导入sys模块来设置系统编码。
 
 
-####
+#### 2、python 程序运行时间特别长，一个脚本运行了一个小时才出结果，使用 line_profiler 进行分析，发现在迭代时使用了 hasattr() 进行属性存在判断，导致占用时间特别长。

@@ -31,3 +31,20 @@ go get github.com/go-xorm/xorm
 ```angularjs
 go get github.com/go-xorm/cmd/xorm
 ```
+
+#### 基于 make 编译 go 工程
+
+1、进入 GOPATH 目录下
+```angularjs
+go env
+```
+
+2、在 src 目录下的 github.com 目录下创建用户的目录，然后拉取代码，进行编译。
+```angularjs
+mkdir f1yegor
+git clone https://github.com/f1yegor/clickhouse_exporter.git
+cd clickhouse_exporter/
+make build
+```
+
+

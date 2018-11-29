@@ -2,7 +2,7 @@
 
 #### 原生方式部署
 ##### 下载安装包
-```angular2
+```angularjs
 
 wget https://github.com/prometheus/prometheus/releases/download/v2.5.0/prometheus-2.5.0.linux-amd64.tar.gz
 
@@ -99,28 +99,45 @@ http://192.168.33.10:3000
 ```
 以 admin/admin 登录进去
 
+然后添加数据源，将 prometheus 相关信息填写进去。
+
 4、部署 clickhouse
-
-
-
 
 
 #### 容器方式部署
 1、启动 prometheus 容器
 ```
-docker run -p 9090:9090 -v /root/prometheus-2.5.0.linux-amd64/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+docker run -d -p 9090:9090 -v /root/prometheus-2.5.0.linux-amd64/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
 ```
-2、启动 node_exporter 容器
-```angular2
 
+2、启动 node_exporter 容器
+```angularjs
+docker run -d -p 9100:9100 prom/node-exporter
+```
+将如下连接信息写入 prometheus.yml 中，重启 prometheus 容器
+```angularjs
+scrape_configs:
+  - job_name: 'node_exporter'
+  static_configs:
+  - targets: ['192.168.33.10:9100']
+- job:
+  static_configs:
 ```
 
 3、启动 grafana 容器
-```angular2
-
+```angularjs
+docker run -d -p 3000:3000 grafana/grafana
 ```
 
 4、启动 clickhouse 容器
-```angular2
-
+```angularjs
+# 启动 clickhouse-server
+docker run -d -p 8123:8123 -p 9000:9000 -p 9009:9009 --name clickhouse-server --ulimit nofile=262144:262144 yandex/clickhouse-server
 ```
+
+5、启动 clickhouse_exporter 容器，需要指定 clickhouse 的地址
+```angularjs
+docker run -d -p 9116:9116 f1yegor/clickhouse-exporter -scrape_uri=http://192.168.33.10:8123/
+```
+
+6、以 admin/admin 登录进 grafana，导入 clickhouse 的 dashboard 文件，文件地址为：https://grafana.com/dashboards/882

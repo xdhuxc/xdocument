@@ -1,0 +1,10 @@
+backend = "dynamodb"
+confdir = "/etc/confd"
+log-level = "debug"
+interval = "60"
+nodes = [
+    "http://192.168.0.128:8000"
+]
+table = "xdhuxc"
+prefix = "/xdhuxc"
+scheme = "http"

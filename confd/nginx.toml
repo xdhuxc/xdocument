@@ -1,0 +1,10 @@
+[template]
+prefix = "/hawkeye"
+src = "nginx.tmpl"
+dest = "/etc/nginx/conf/nginx.conf"
+keys = [
+    "/services/web"
+]
+
+check_cmd = "/usr/sbin/nginx -t -c {{.src}}"
+reload_cmd = "/usr/sbin/service nginx reload"

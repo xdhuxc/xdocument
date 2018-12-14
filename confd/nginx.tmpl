@@ -1,0 +1,14 @@
+{{range $dir := lsdir "/services/web"}}
+upstream {{base $dir}} {
+    {{$custdir := printf "/services/web/%s/*" $dir}}{{range gets $custdir}}
+    server {{$data := json .Value}}{{$data.IP}}:80;
+    {{end}}
+}
+
+server {
+    server_name {{base $dir}}.example.com;
+    location / {
+        proxy_pass {{base $dir}};
+    }
+}
+{{end}}

@@ -194,4 +194,14 @@ ip: {{$data.ip}}
 ```
 
 
+```angular2html
+{{ range gets "/business_json/businesses/*"}}
+    {{$item := .Value}}
+         {{if $item}}
+                {{$item}},
+        {{end}}
+    {{end}}
+```
+
+
 

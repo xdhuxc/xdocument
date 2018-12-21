@@ -48,6 +48,10 @@ https://github.com/topics
 
 https://www.mkdocs.org/#overview
 
+2、构建服务器操作系统镜像
+
+https://www.packer.io/intro/getting-started/build-image.html
+
 
 
 

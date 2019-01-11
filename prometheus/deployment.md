@@ -107,8 +107,9 @@ http://192.168.33.10:3000
 #### 容器方式部署
 1、启动 prometheus 容器
 ```
-docker run -d -p 9090:9090 -v /root/prometheus-2.5.0.linux-amd64/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+docker run -d --restart=always --name=prometheus --network=host -v /data/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
 ```
+为了便于和其他容器通信，使用 host 网络模式启动 prometheus 容器。
 
 2、启动 node_exporter 容器
 ```angularjs
@@ -126,7 +127,7 @@ scrape_configs:
 
 3、启动 grafana 容器
 ```angularjs
-docker run -d -p 3000:3000 grafana/grafana
+docker run -d --restart=always --name=grafana -p 3000:3000 grafana/grafana
 ```
 
 4、启动 clickhouse 容器

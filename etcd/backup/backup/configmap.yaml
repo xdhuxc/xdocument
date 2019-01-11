@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backup-config
+  namespace: kube-system
+data:
+  backup_cr.yaml: |
+    apiVersion: "etcd.database.coreos.com/v1beta2"
+    kind: "EtcdBackup"
+    metadata:
+      generateName: etcd-backup
+      namespace: kube-system
+    spec:
+      TLS:
+        static:
+          member:
+            peerSecret: etcd-peer-tls
+            serverSecret: etcd-server-tls
+          operatorSecret: etcd-client-tls
+      etcdEndpoints: ["http://example-etcd:2379"]
+      storageType: S3
+      s3:
+        path: mybucket/etcd.backup.<NOW>
+        awsSecret: aws

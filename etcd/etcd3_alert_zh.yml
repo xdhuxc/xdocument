@@ -1,0 +1,99 @@
+groups:
+- name: etcd3-alert-rules
+  rules:
+  - alert: 'InsufficientMembers'
+    expr: count(up{job="etcd"} == 0) > (count(up{job="etcd"}) / 2 - 1)
+    for: 3m
+    labels:
+      severity: 'critical'
+    annotations:
+      description: '如果再有一个 etcd 节点宕机，那么集群将不可用。'
+      summary: 'etcd 集群节点不足。'
+  - alert: 'NoLeader'
+    expr: etcd_server_has_leader{job="etcd"} == 0
+    for: 1m
+    labels:
+      severity: 'critical'
+    annotations:
+      description: 'etcd 节点 {{ $labels.instance }} 没有 leader。'
+      summary: 'etcd 节点没有 leader。'
+  - alert: HighNumberOfLeaderChanges
+    expr: increase(etcd_server_leader_changes_seen_total{job="etcd"}[1h]) > 3
+    labels:
+      severity: 'warning'
+    annotations:
+      description: '在过去一小时内，etcd 节点 {{ $labels.instance }} 的 leader 变化了 {{ $value }} 次。'
+      summary: '在 etcd 集群内部发生了多次 leader 变更。'
+  - alert: HighNumberOfFailedGRPCRequestsWithinTenMinutes
+    expr: 100 * (sum(rate(grpc_server_handled_total{grpc_code!="OK",job="etcd"}[5m])) BY (grpc_service, grpc_method) / sum(rate(grpc_server_handled_total{job="etcd"}[5m])) BY (grpc_service, grpc_method)) > 1
+    for: 10m
+    labels:
+      severity: 'warning'
+    annotations:
+      description: '在 etcd 节点 {{ $labels.instance }} 上，{{ $value }}% 的请求 {{ $labels.grpc_method }} 方法的访问失败了。'
+      summary: '大量的 gRPC 请求失败。'
+  - alert: HighNumberOfFailedGRPCRequestsWithinFiveMinutes
+    expr: 100 * (sum(rate(grpc_server_handled_total{grpc_code!="OK",job="etcd"}[5m])) BY (grpc_service, grpc_method) / sum(rate(grpc_server_handled_total{job="etcd"}[5m])) BY (grpc_service, grpc_method)) > 5
+    for: 5m
+    labels:
+      severity: 'critical'
+    annotations:
+      description: '在 etcd 节点 {{ $labels.instance }} 上，{{ $value }}% 的请求 {{ $labels.grpc_method }} 方法的访问失败了。'
+      summary: '大量的 gRPC 请求失败。'
+  - alert: GRPCRequestsSlow
+    expr: histogram_quantile(0.99, sum(rate(grpc_server_handling_seconds_bucket{job="etcd",grpc_type="unary"}[5m])) by (grpc_service, grpc_method, le)) > 0.15
+    for: 10m
+    labels:
+      severity: 'critical'
+    annotations:
+      description: '在 etcd 节点 {{ $labels.instance }} 上，gRPC 请求 {{ $labels.grpc_method }} 方法缓慢。'
+      summary: 'gRPC 请求缓慢。'
+  - record: instance:fd_utilization
+    expr: process_open_fds / process_max_fds
+  - alert: FdExhaustionCloseInFourHours
+    expr: predict_linear(instance:fd_utilization[1h], 3600 * 4) > 1
+    for: 10m
+    labels:
+      severity: 'warning'
+    annotations:
+      description: '在 {{ $labels.instance }} 节点上，{{ $labels.job }} 消耗了大量的文件描述符。'
+      summary: '文件描述符将很快消耗殆尽。'
+  - alert: FdExhaustionCloseInOneHour
+    expr: predict_linear(instance:fd_utilization[10m], 3600) > 1
+    for: 10m
+    labels:
+      severity: 'critical'
+    annotations:
+      description: '在 {{ $labels.instance }} 节点上，{{ $labels.job }} 消耗了大量的文件描述符。'
+      summary: '文件描述符将很快消耗殆尽。'
+  - alert: EtcdMemberCommunicationSlow
+    expr: histogram_quantile(0.99, rate(etcd_network_peer_round_trip_time_seconds_bucket[5m])) > 0.15
+    for: 10m
+    labels:
+      severity: 'warning'
+    annotations:
+      description: 'etcd 节点 {{ $labels.instance }} 和 {{ $labels.To }} 之间通信缓慢。'
+      summary: 'etcd 节点之间通信缓慢。'
+  - alert: HighNumberOfFailedProposals
+    expr: increase(etcd_server_proposals_failed_total{job="etcd"}[1h]) > 5
+    labels:
+      severity: 'warning'
+    annotations:
+      description: '在过去一小时内，etcd 节点 {{ $labels.instance }} 收到了 {{ $value }} 次失败提议。'
+      summary: 'etcd 集群中大量提议失败了。'
+  - alert: HighFsyncDurations
+    expr: histogram_quantile(0.99, rate(etcd_disk_wal_fsync_duration_seconds_bucket[5m])) > 0.5
+    for: 10m
+    labels:
+      severity: 'warning'
+    annotations:
+      description: 'etcd 节点 {{ $labels.instance }} fync 持续时间过高。'
+      summary: '过高的 fsync 持续时间'
+  - alert: HighCommitDurations
+    expr: histogram_quantile(0.99, rate(etcd_disk_backend_commit_duration_seconds_bucket[5m])) > 0.25
+    for: 10m
+    labels:
+      severity: 'warning'
+    annotations:
+      description: 'etcd 节点 {{ $labels.instance }} 提交期限过高。'
+      summary: '过高的提交期限。'

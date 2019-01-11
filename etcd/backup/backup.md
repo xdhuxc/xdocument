@@ -96,6 +96,12 @@ kubectl delete EtcdBackup etcd-cluster-backup
 kubectl delete -f ./backup/etcd-backup-operator.yaml
 ```
 
+### 基于 etcdctl 和 awscli 实现 etcd 数据备份
+
+
+
+
+
 #### 参考资料
 1、coreos 官方文档 TLS 配置
 

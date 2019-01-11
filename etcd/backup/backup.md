@@ -98,7 +98,11 @@ kubectl delete -f ./backup/etcd-backup-operator.yaml
 
 ### 基于 etcdctl 和 awscli 实现 etcd 数据备份
 
+http://www.10tiao.com/html/488/201610/2247483913/1.html
 
+https://xigang.github.io/2018/08/18/etcd-back/
+
+为了加强对 etcd 数据备份的控制力，可以考虑使用 python 或者 go 编写程序进行定时备份和删除过期备份，部署在 AWS Lambda 上，恢复时使用 awscli 和 etcdcli 命令行来手工操作。
 
 
 
@@ -110,5 +114,7 @@ https://github.com/coreos/etcd-operator/blob/master/doc/user/cluster_tls.md
 2、coreos 官方文档 etcd-backup-operator 部署
 
 https://coreos.com/operators/etcd/docs/latest/user/walkthrough/backup-operator.html
+
+
 
 

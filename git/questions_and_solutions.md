@@ -31,3 +31,12 @@ Checking out files: 100% (798/798), done.
 Fetch failed: Could not read from remote repository.
 ```
 在 IDEA 中，点击 “File”，选择 “Settings”，找到 “Version Control”，选择 “Git”，修改 “SSH executable” 为 “Native”，重新拉取代码即可。
+
+3）git 添加远程仓库时报错
+```angular2html
+wanghuans-MacBook-Pro:vue-admin-template wanghuan$ git remote add origin git@github.com:xdhuxc/xpython.git 
+fatal: remote origin already exists.
+wanghuans-MacBook-Pro:vue-admin-template wanghuan$ git remote rm origin
+wanghuans-MacBook-Pro:vue-admin-template wanghuan$ git remote add origin git@github.com:xdhuxc/xpython.git
+```
+解决：先删除远程 Git 仓库，然后再添加远程 Git 仓库。

@@ -14,6 +14,8 @@ grafana dashboard 配置：
 
 修改 grafana.json 中 datasource 为 Prometheus 数据源的名称，导入 grafana.json，可以将该 dashboard 命名为：etcd-monitor
 
+也可以使用 etcd_rev3.json 
+
 在 etcd 中未配置证书的情况下，在 prometheus.yml 文件中增加如下配置内容：
 ```angular2html
 global:

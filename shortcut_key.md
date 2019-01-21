@@ -41,6 +41,13 @@ Ctrl + X | 删除当前行
 Ctrl + D | 删除当前行
 Ctrl + Alt + ↑ | 复制当前行到上一行
 Ctrl + Alt + ↓ | 复制当前行到下一行
+command + F | 当前文件全文查找
+command + R | 当前文件全文查找替换
+command + ↑ + R | 全路径查找替换
+command + ↑ + F | 全路径查找
+command + l | 跳转至指定行
+
+
 
 
 ### word 快捷键
